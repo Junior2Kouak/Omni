@@ -1,24 +1,50 @@
 import sqlite3
 
-# Connexion (crée la base si elle n'existe pas)
 conn = sqlite3.connect("ma_base.db")
-
-# Création d'un curseur pour exécuter des commandes SQL
 cur = conn.cursor()
 
-# Création d'une table "utilisateurs"
-cur.execute("""
-CREATE TABLE IF NOT EXISTS utilisateurs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nom TEXT NOT NULL,
-    age INTEGER
-)
-""")
+# cur.execute("""
+# CREATE TABLE IF NOT EXISTS photos (
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     nom TEXT NOT NULL,
+#     image BLOB NOT NULL
+# )
+# """)
 
-# Sauvegarde des changements
-conn.commit()
+# print("✅ Table 'photos' créée avec succès !")
 
-# Fermeture de la connexion
+
+# def lire_image(fichier):
+#     with open(fichier, 'rb') as f:
+#         return f.read()
+
+# conn = sqlite3.connect("ma_base.db")
+# cur = conn.cursor()
+
+# nom = "chat"
+# image_blob = lire_image("car.png")  # mets ici ton image
+
+# cur.execute("INSERT INTO photos (nom, image) VALUES (?, ?)", (nom, image_blob))
+
+# conn.commit()
+# conn.close()
+
+# print("✅ Image insérée avec succès !")
+
+from PIL import Image
+import io
+
+conn = sqlite3.connect("ma_base.db")
+cur = conn.cursor()
+
+cur.execute("SELECT image FROM photos WHERE nom = ?", ("chat",))
+resultat = cur.fetchone()
+
+if resultat:
+    image_blob = resultat[0]
+    image = Image.open(io.BytesIO(image_blob))
+    image.show()  # ouvre l’image avec la visionneuse du système
+else:
+    print("❌ Image non trouvée.")
+
 conn.close()
-
-print("✅ Base et table créées avec succès !")
