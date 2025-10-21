@@ -1,0 +1,5 @@
+test_image,ground_truth,predicted,tp,fp,fn,n_faces_detected
+Mask_Proche_1001 (2).jpg,,,,,,0
+Mask_Proche_1001.jpg,,,,,,0
+Mask_Proche_1002.jpg,,,,,,0
+NoMask_Mi_3539.jpg,,,,,,0
